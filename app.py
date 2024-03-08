@@ -1,60 +1,50 @@
-from flask import Flask, render_template, request,jsonify
+# This function adds two numbers
+def add(x, y):
+    return x + y
 
-app = Flask(__name__)
+# This function subtracts two numbers
+def subtract(x, y):
+    return x - y
 
-@app.route('/', methods=['GET','POST'])
-def home_page():
-    return render_template('index.html')
+# This function multiplies two numbers
+def multiply(x, y):
+    return x * y
 
+# This function divides two numbers
+def divide(x, y):
+    return x / y
 
+print("Select operation:")
+print("1. Add")
+print("2. Subtract")
+print("3. Multiply")
+print("4. Divide")
 
-@app.route('/math',methods=['POST'])
-def math_ops():
-    if(request.method == 'POST'):
-        ops = request.form['operation']
-        num1 = int(request.form['num1'])
-        num2 = int(request.form['num2'])
-        if ops == 'add':
-            r = num1+num2
-            result = "The sum of " + str(num1) + 'and ' + str(num2) + "is " + str(r)
-        if (ops=='subtract'):
-            r = num1 - num2
-            result= 'the subtrsct of ' +str(num1) + 'and' + str(num2) + "is " + str(r)
+while True:
+    # Take input from the user
+    choice = input("Enter choice (1/2/3/4): ")
 
-        if (ops=='multiply'):
-            r = num1 * num2
-            result= 'the multiply of ' +str(num1) + 'and' + str(num2) + "is " + str(r)
+    # Check if choice is one of the four options
+    if choice in ('1', '2', '3', '4'):
+        try:
+            num1 = float(input("Enter first number: "))
+            num2 = float(input("Enter second number: "))
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+            continue
 
-        if (ops=='divide'):
-            r = num1 / num2
-            result= 'the divide of ' +str(num1) + 'and' + str(num2) + "is " + str(r)          
-  
-        return render_template('results.html',result=result)
+        if choice == '1':
+            print(f"{num1} + {num2} = {add(num1, num2)}")
+        elif choice == '2':
+            print(f"{num1} - {num2} = {subtract(num1, num2)}")
+        elif choice == '3':
+            print(f"{num1} * {num2} = {multiply(num1, num2)}")
+        elif choice == '4':
+            print(f"{num1} / {num2} = {divide(num1, num2)}")
 
-@app.route('/postman_data',methods=['POST'])
-def math_ops1():
-    if(request.method == 'POST'):
-        ops = request.json['operation']
-        num1 = int(request.json['num1'])
-        num2 = int(request.json['num2'])
-        if ops == 'add':
-            r = num1+num2
-            result = "The sum of " + str(num1) + 'and ' + str(num2) + "is " + str(r)
-        if (ops=='subtract'):
-            r = num1 - num2
-            result= 'the subtrsct of ' +str(num1) + 'and' + str(num2) + "is " + str(r)
-
-        if (ops=='multiply'):
-            r = num1 * num2
-            result= 'the multiply of ' +str(num1) + 'and' + str(num2) + "is " + str(r)
-
-        if (ops=='divide'):
-            r = num1 / num2
-            result= 'the divide of ' +str(num1) + 'and' + str(num2) + "is " + str(r)          
-  
-        return jsonify(result)
-
-
-
-if __name__=="__main__":
-    app.run(host="0.0.0.0")
+        # Check if the user wants another calculation
+        next_calculation = input("Let's do the next calculation? (yes/no): ")
+        if next_calculation.lower() == "no":
+            break
+    else:
+        print("Invalid Input")
